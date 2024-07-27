@@ -1,9 +1,7 @@
 import family_three.FamilyThree;
 import human.Human;
-import writer.FamilyTreeIO;
-
-import java.io.IOException;
-import java.lang.ClassNotFoundException;
+import presenter.FamilyTreePresenter;
+import view.ConsoleFamilyTreeView;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,25 +11,27 @@ public class Main {
         // Создание дерева
         FamilyThree<Human> familyTree = new FamilyThree<>(root);
 
-        // Добавление членов семьи
-        Human child = new Human("Jane Doe", "02/02/2010");
-        familyTree.addMember(child);
+        // Создание представления и презентера
+        ConsoleFamilyTreeView view = new ConsoleFamilyTreeView();
+        FamilyTreePresenter presenter = new FamilyTreePresenter(view, familyTree);
 
-        // Сортировка
-        familyTree.sortByName();
-        familyTree.sortByBirthday();
+        // Пример работы с презентером
+        presenter.addMember(new Human("Jane Doe", "02/02/2010"));
+        presenter.displayFamilyTree();
 
-        // Запись и чтение из файла
-        try {
-            FamilyTreeIO.writeFamilyTree(familyTree, "familyTree.dat");
-            FamilyThree<Human> loadedFamilyTree = FamilyTreeIO.readFamilyTree("familyTree.dat");
+        // Работа с пользовательским вводом
+        view.showMessage("Enter filename to save:");
+        String filename = view.getUserInput();
+        presenter.saveFamilyTree(filename);
 
-            // Вывод всех членов семьи
-            for (Human member : loadedFamilyTree.getMembers()) {
-                System.out.println(member.getName() + ", " + member.getBirthday());
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace(); 
-        }
+        view.showMessage("Enter filename to load:");
+        filename = view.getUserInput();
+        presenter.loadFamilyTree(filename);
+
+        presenter.sortByName();
+        presenter.displayFamilyTree();
+
+        presenter.sortByBirthday();
+        presenter.displayFamilyTree();
     }
 }

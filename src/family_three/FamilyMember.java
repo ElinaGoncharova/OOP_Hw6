@@ -1,8 +1,9 @@
 package family_three;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface FamilyMember {
+public interface FamilyMember extends Serializable {
     String getName();
     void setName(String name);
 

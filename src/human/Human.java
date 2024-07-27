@@ -1,12 +1,10 @@
 package human;
 
 import family_three.FamilyMember;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements FamilyMember, Serializable {
+public class Human implements FamilyMember {
     private static final long serialVersionUID = 1L;
     private String name;
     private String birthday;
@@ -58,3 +56,4 @@ public class Human implements FamilyMember, Serializable {
         this.parent = parent;
     }
 }
+

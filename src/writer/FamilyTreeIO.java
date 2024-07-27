@@ -1,20 +1,26 @@
 package writer;
 
 import family_three.FamilyThree;
-import family_three.FamilyMember;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class FamilyTreeIO {
-    public static <T extends FamilyMember> void writeFamilyTree(FamilyThree<T> familyTree, String filename) throws IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(familyTree);
+    
+    // Запись дерева семьи в файл
+    public static <T> void writeFamilyTree(FamilyThree<T> familyTree, String filename) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(familyTree);
         }
     }
 
+    // Чтение дерева семьи из файла
     @SuppressWarnings("unchecked")
-    public static <T extends FamilyMember> FamilyThree<T> readFamilyTree(String filename) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            return (FamilyThree<T>) in.readObject();
+    public static <T> FamilyThree<T> readFamilyTree(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (FamilyThree<T>) ois.readObject();
         }
     }
 }

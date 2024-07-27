@@ -1,10 +1,12 @@
 package view;
 
-import human.Human;
-import java.util.List;
+import family_three.FamilyThree;
 
 public interface FamilyTreeView {
-    void showFamilyTree(List<Human> members);
     void showMessage(String message);
-    String getUserInput();
+    String getInput(String prompt);
+    void displayError(String errorMessage);
+    void displayFamilyTree(FamilyThree<?> familyTree);
+    void saveFamilyTree(FamilyThree<?> familyTree);
+    void loadFamilyTree();
 }

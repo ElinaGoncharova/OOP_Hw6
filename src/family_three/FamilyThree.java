@@ -1,57 +1,54 @@
 package family_three;
 
-import human.Human;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
-public class FamilyThree implements Serializable, Iterable<Human> {
+public class FamilyThree<T extends FamilyMember> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
+    private T root;
+    private List<T> members = new ArrayList<>();
 
-    private List<Human> members;
-
-    public FamilyThree() {
-        this.members = new ArrayList<>();
+    public FamilyThree(T root) {
+        this.root = root;
+        this.members.add(root);
     }
 
-    public void addMember(Human human) {
-        this.members.add(human);
+    public void addMember(T member) {
+        members.add(member);
     }
 
-    public Optional<Human> findMemberByName(String name) {
-        return members.stream()
-                .filter(human -> human.getName().equalsIgnoreCase(name))
-                .findFirst();
+    public void sortByName() {
+        // Пример сортировки по имени
+        members.sort((m1, m2) -> m1.getName().compareTo(m2.getName()));
     }
 
-    public List<Human> getMembers() {
+    public void sortByBirthday() {
+        // Пример сортировки по дате рождения
+        members.sort((m1, m2) -> m1.getBirthday().compareTo(m2.getBirthday()));
+    }
+
+    // Getters and Setters
+    public T getRoot() {
+        return root;
+    }
+
+    public void setRoot(T root) {
+        this.root = root;
+    }
+
+    public List<T> getMembers() {
         return members;
     }
 
-    public void printFamilyTree() {
-        System.out.println("Family members:");
-        for (Human member : this) {
-            System.out.println(member);
-        }
+    public void setMembers(List<T> members) {
+        this.members = members;
     }
 
-    // Метод для сортировки по имени
-    public void sortByName() {
-        Collections.sort(members, Comparator.comparing(Human::getName));
-    }
-
-    // Метод для сортировки по дате рождения
-    public void sortByBirthday() {
-        Collections.sort(members, Comparator.comparing(Human::getBirthday));
-    }
-
+    // Реализация интерфейса Iterable
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return members.iterator();
     }
 }
